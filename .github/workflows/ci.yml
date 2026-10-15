@@ -20,4 +20,4 @@ jobs:
       - name: Install package
         run: raco pkg install --auto --link "$(pwd)"
       - name: Run tests
-        run: raco test -p srec
+        run: raco test -p obd2
