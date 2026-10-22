@@ -1,5 +1,7 @@
 # obd2 — SAE J1979 OBD-II services in pure Racket
 
+**English** · [中文](README.zh-CN.md)
+
 [![CI](https://github.com/turinglambdaai/obd2/actions/workflows/ci.yml/badge.svg)](https://github.com/turinglambdaai/obd2/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 `obd2` implements the message layer of **OBD-II** — the SAE J1979
