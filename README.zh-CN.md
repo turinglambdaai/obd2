@@ -22,29 +22,28 @@ raco pkg install obd2
 
 ## 用法
 
+下面的示例使用合成、已重组的诊断载荷，可直接复制运行，无需 CAN
+适配器、实车或 ISO-TP 传输。构造请求并不会自动发送；传输与超时由调用方负责。
+
 ```racket
+#lang racket/base
 (require obd2)
-
-;; ask for engine RPM, then decode a positive response
-(make-request #x01 #x0C)                       ; => #"\1\f"
-(define r (parse-response #x01 (bytes #x41 #x0C #x0E #x70)))
-(obd-response-value r)                         ; => '(924.0 . "rpm")
-
-;; which PIDs does the vehicle support?
-(decoded (pid-for #x00) (bytes #xBE #x1F #xA8 #x13))
-;; => '(1 3 4 5 6 7 12 13 14 15 16 17 19 20 22 23 24)
-
-;; stored trouble codes (mode 03)
+(make-request #x01 #x0C) ; => (bytes #x01 #x0C)，请求发动机转速
+(define rpm (parse-response #x01 (bytes #x41 #x0C #x0E #x70)))
+(obd-response-value rpm) ; => '(924.0 . "rpm")
+(decode-pid (pid-for #x00) (bytes #xBE #x1F #xA8 #x13))
+;; => '(1 3 4 5 6 7 12 13 14 15 16 17 19 21 28 31 32)
 (obd-response-value
  (parse-response #x03 (bytes #x43 #x02 #x04 #x20 #x01 #x23)))
 ;; => '("P0420" "P0123")
-
-;; MIL status: on, 2 codes, spark ignition
-(status-word (bytes #x82 #x07 #x65 #x04))      ; => '(#t 2 spark)
-
-;; VIN from a service 09 response
-(vin-from-response payload)
+(status-word (bytes #x82 #x07 #x65 #x04)) ; => '(#t 2 spark)
+(vin-from-response
+ (bytes-append (bytes #x49 #x02 #x01) #"1M8GDM9AXKP042788"))
+;; => "1M8GDM9AXKP042788"（合成测试样例）
 ```
+
+[可执行入门示例](examples/quickstart.rkt)对以上参考向量逐项断言。
+[权威 Scribble API 手册](obd2/scribblings/obd2.scrbl)定义公开契约与错误行为。
 
 ### 范围
 
@@ -59,6 +58,21 @@ raco pkg install obd2
 
 传输层（ISO 15765-2 / isotp）与原始 CAN 层不在范围内——把重组后的
 诊断载荷喂给 `parse-response` 即可。
+
+## 开发与测试
+
+安装 Racket 后，在仓库根目录运行：
+
+```sh
+raco pkg install --auto --link "$(pwd)"
+raco test -p obd2
+racket examples/quickstart.rkt
+raco setup --check-pkg-deps -l obd2
+```
+
+CI 在 Linux、macOS、Windows 上运行测试、合成示例和 Scribble/依赖检查。
+请通过 [GitHub Issues](https://github.com/turinglambdaai/obd2/issues)
+提交脱敏的最小复现样例及 Racket 版本。
 
 ## 许可证
 
