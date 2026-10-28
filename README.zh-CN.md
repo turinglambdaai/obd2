@@ -42,7 +42,7 @@ raco pkg install obd2
 ;; => "1M8GDM9AXKP042788"（合成测试样例）
 ```
 
-[可执行入门示例](examples/quickstart.rkt)对以上参考向量逐项断言。
+[可执行入门示例](obd2/examples/quickstart.rkt)对以上参考向量逐项断言。
 [权威 Scribble API 手册](obd2/scribblings/obd2.scrbl)定义公开契约与错误行为。
 
 ### 范围
@@ -66,7 +66,7 @@ raco pkg install obd2
 ```sh
 raco pkg install --auto --link "$(pwd)"
 raco test -p obd2
-racket examples/quickstart.rkt
+racket obd2/examples/quickstart.rkt
 raco setup --check-pkg-deps -l obd2
 ```
 

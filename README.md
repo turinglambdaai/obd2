@@ -45,7 +45,7 @@ automatically: the caller owns transport and timeout handling.
 ;; => "1M8GDM9AXKP042788" (synthetic test fixture)
 ```
 
-The [executable quickstart](examples/quickstart.rkt) asserts all of these
+The [executable quickstart](obd2/examples/quickstart.rkt) asserts all of these
 reference vectors. The [Scribble API manual](obd2/scribblings/obd2.scrbl)
 defines the public contracts and error behavior.
 
@@ -71,7 +71,7 @@ From a repository checkout with Racket installed:
 ```sh
 raco pkg install --auto --link "$(pwd)"
 raco test -p obd2
-racket examples/quickstart.rkt
+racket obd2/examples/quickstart.rkt
 raco setup --check-pkg-deps -l obd2
 ```
 
