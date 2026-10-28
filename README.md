@@ -24,29 +24,30 @@ raco pkg install obd2
 
 ## Usage
 
+This copy/paste example uses synthetic, already reassembled diagnostic payloads;
+it needs no CAN adapter, vehicle or ISO-TP transport. A request is not sent
+automatically: the caller owns transport and timeout handling.
+
 ```racket
+#lang racket/base
 (require obd2)
-
-;; ask for engine RPM, then decode a positive response
-(make-request #x01 #x0C)                       ; => #"\1\f"
-(define r (parse-response #x01 (bytes #x41 #x0C #x0E #x70)))
-(obd-response-value r)                         ; => '(924.0 . "rpm")
-
-;; which PIDs does the vehicle support?
-(decoded (pid-for #x00) (bytes #xBE #x1F #xA8 #x13))
-;; => '(1 3 4 5 6 7 12 13 14 15 16 17 19 20 22 23 24)
-
-;; stored trouble codes (mode 03)
+(make-request #x01 #x0C) ; => (bytes #x01 #x0C), request engine RPM
+(define rpm (parse-response #x01 (bytes #x41 #x0C #x0E #x70)))
+(obd-response-value rpm) ; => '(924.0 . "rpm")
+(decode-pid (pid-for #x00) (bytes #xBE #x1F #xA8 #x13))
+;; => '(1 3 4 5 6 7 12 13 14 15 16 17 19 21 28 31 32)
 (obd-response-value
  (parse-response #x03 (bytes #x43 #x02 #x04 #x20 #x01 #x23)))
 ;; => '("P0420" "P0123")
-
-;; MIL status: on, 2 codes, spark ignition
-(status-word (bytes #x82 #x07 #x65 #x04))      ; => '(#t 2 spark)
-
-;; VIN from a service 09 response
-(vin-from-response payload)
+(status-word (bytes #x82 #x07 #x65 #x04)) ; => '(#t 2 spark)
+(vin-from-response
+ (bytes-append (bytes #x49 #x02 #x01) #"1M8GDM9AXKP042788"))
+;; => "1M8GDM9AXKP042788" (synthetic test fixture)
 ```
+
+The [executable quickstart](examples/quickstart.rkt) asserts all of these
+reference vectors. The [Scribble API manual](obd2/scribblings/obd2.scrbl)
+defines the public contracts and error behavior.
 
 ### Scope
 
@@ -62,6 +63,21 @@ raco pkg install obd2
 
 Transport (ISO 15765-2 / isotp) and the raw CAN layer are out of scope —
 feed `parse-response` the reassembled diagnostic payload.
+
+## Development
+
+From a repository checkout with Racket installed:
+
+```sh
+raco pkg install --auto --link "$(pwd)"
+raco test -p obd2
+racket examples/quickstart.rkt
+raco setup --check-pkg-deps -l obd2
+```
+
+CI exercises tests, this synthetic example and the Scribble/dependency gate
+on Linux, macOS and Windows. Please report a minimal, non-sensitive fixture
+and Racket version via [GitHub Issues](https://github.com/turinglambdaai/obd2/issues).
 
 ## License
 
