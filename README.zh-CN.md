@@ -2,7 +2,7 @@
 
 [English](README.md) · **中文**
 
-[![CI](https://github.com/turinglambdaai/obd2/actions/workflows/ci.yml/badge.svg)](https://github.com/turinglambdaai/obd2/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/turlamai/obd2/actions/workflows/ci.yml/badge.svg)](https://github.com/turlamai/obd2/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 `obd2` 实现了 **OBD-II** 的消息层——即 SAE J1979 诊断服务（"模式"），
 在主要市场销售的每一辆道路车辆都必须应答：实时传感器 PID、已存储与
@@ -11,7 +11,7 @@
 全部以纯 Racket 实现。Mode 01 PID 表是从 Python 的
 [python-OBD](https://github.com/brendan-w/python-OBD)
 （0.7.3）冻结移植而来，其实时解码器同时提供了算术测试基准。DTC 文本
-形式与 [uds](https://github.com/turinglambdaai/uds)
+形式与 [uds](https://github.com/turlamai/uds)
 包（ISO 14229）共享，在两个诊断世界里保持完全一致的字母/数字格式。
 
 ## 安装
@@ -71,7 +71,7 @@ raco setup --check-pkg-deps -l obd2
 ```
 
 CI 在 Linux、macOS、Windows 上运行测试、合成示例和 Scribble/依赖检查。
-请通过 [GitHub Issues](https://github.com/turinglambdaai/obd2/issues)
+请通过 [GitHub Issues](https://github.com/turlamai/obd2/issues)
 提交脱敏的最小复现样例及 Racket 版本。
 
 ## 许可证

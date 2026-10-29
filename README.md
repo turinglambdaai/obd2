@@ -2,7 +2,7 @@
 
 **English** · [中文](README.zh-CN.md)
 
-[![CI](https://github.com/turinglambdaai/obd2/actions/workflows/ci.yml/badge.svg)](https://github.com/turinglambdaai/obd2/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![CI](https://github.com/turlamai/obd2/actions/workflows/ci.yml/badge.svg)](https://github.com/turlamai/obd2/actions/workflows/ci.yml) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
 `obd2` implements the message layer of **OBD-II** — the SAE J1979
 diagnostic services ("modes") that every road vehicle sold in major
@@ -12,7 +12,7 @@ trouble codes, freeze frames, vehicle information and emissions readiness.
 Everything is implemented in pure Racket.  The Mode 01 PID table is a
 frozen port of Python's [python-OBD](https://github.com/brendan-w/python-OBD)
 (0.7.3), whose live decoders also provide the arithmetic test anchors.
-DTC text forms are shared with the [uds](https://github.com/turinglambdaai/uds)
+DTC text forms are shared with the [uds](https://github.com/turlamai/uds)
 package (ISO 14229), keeping the letter/number format identical across
 both diagnostic worlds.
 
@@ -77,7 +77,7 @@ raco setup --check-pkg-deps -l obd2
 
 CI exercises tests, this synthetic example and the Scribble/dependency gate
 on Linux, macOS and Windows. Please report a minimal, non-sensitive fixture
-and Racket version via [GitHub Issues](https://github.com/turinglambdaai/obd2/issues).
+and Racket version via [GitHub Issues](https://github.com/turlamai/obd2/issues).
 
 ## License
 
