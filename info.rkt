@@ -9,7 +9,7 @@
 (define deps '("base" "rackunit-lib" "uds"))
 (define build-deps '("base" "scribble-lib" "racket-doc" "rackunit-lib"))
 (define pkg-desc "Pure-Racket SAE J1979 OBD-II services (modes 01-0A): the full Mode-01 PID table with J1979 formulas, DTC services, supported bitmaps, MIL status and VIN extraction")
-(define pkg-authors '("turinglambdaai"))
+(define pkg-authors '("turlamai"))
 (define license 'MIT)
 ;; Documentation is declared in obd2/info.rkt (collection level) — `raco
 ;; setup` only discovers scribblings from a collection's own info.rkt for
