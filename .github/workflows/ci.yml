@@ -2,7 +2,15 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.event_name }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -22,6 +30,6 @@ jobs:
       - name: Run tests
         run: raco test -p obd2
       - name: Run synthetic SAE J1979 reference vectors
-        run: racket examples/quickstart.rkt
+        run: racket obd2/examples/quickstart.rkt
       - name: Build Scribble manual and check package dependencies
         run: raco setup --check-pkg-deps -l obd2
